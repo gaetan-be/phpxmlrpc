@@ -3855,6 +3855,10 @@ xmlrpc_encode_entitites($this->errstr, $GLOBALS['xmlrpc_internalencoding'], $cha
 		return false;
 	}
 
+	function setInternalEncoding($newEncoding){
+		$GLOBALS['xmlrpc_internalencoding'] = $newEncoding;
+	}
+
 	/**
 	* Checks if a given charset encoding is present in a list of encodings or
 	* if it is a valid subset of any encoding in the list
