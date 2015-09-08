@@ -34,6 +34,10 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 
+	if(!defined(CURL_SSLVERSION_TLSv1_2)){
+		define("CURL_SSLVERSION_TLSv1_2", 6);
+	}
+
 	if(!function_exists('xml_parser_create'))
 	{
 		// For PHP 4 onward, XML functionality is always compiled-in on windows:
@@ -829,6 +833,7 @@
 		var $proxy_authtype=1;
 		var $cookies=array();
 		var $extracurlopts=array();
+		var $sslCurlVersion = CURL_SSLVERSION_TLSv1_2;
 
 		/**
 		* List of http compression methods accepted by the client for responses.
@@ -1029,6 +1034,10 @@
 		function setSSLVerifyHost($i)
 		{
 			$this->verifyhost = $i;
+		}
+
+		function setCurlSSLVersion($i){
+			$this->sslCurlVersion = $i;
 		}
 
 		/**
@@ -1630,6 +1639,9 @@
 				}
 				// whether to verify cert's common name (CN); 0 for no, 1 to verify that it exists, and 2 to verify that it matches the hostname used
 				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, $this->verifyhost);
+
+				curl_setopt($curl, CURL_SSLVERSION, $this->sslCurlVersion);
+
 			}
 
 			// proxy info
