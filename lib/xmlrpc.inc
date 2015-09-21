@@ -34,7 +34,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 
-	if(!defined(CURL_SSLVERSION_TLSv1_2)){
+	if(!defined("CURL_SSLVERSION_TLSv1_2")){
 		define("CURL_SSLVERSION_TLSv1_2", 6);
 	}
 
@@ -1040,6 +1040,12 @@
 			$this->sslCurlVersion = $i;
 		}
 
+
+		function setInternalEncoding($newEncoding){
+			$GLOBALS['xmlrpc_internalencoding'] = $newEncoding;
+		}
+
+
 		/**
 		* Set proxy info
 		* @param string $proxyhost
@@ -1640,7 +1646,7 @@
 				// whether to verify cert's common name (CN); 0 for no, 1 to verify that it exists, and 2 to verify that it matches the hostname used
 				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, $this->verifyhost);
 
-				curl_setopt($curl, CURL_SSLVERSION, $this->sslCurlVersion);
+				curl_setopt($curl, CURLOPT_SSLVERSION, $this->sslCurlVersion);
 
 			}
 
@@ -3855,9 +3861,6 @@ xmlrpc_encode_entitites($this->errstr, $GLOBALS['xmlrpc_internalencoding'], $cha
 		return false;
 	}
 
-	function setInternalEncoding($newEncoding){
-		$GLOBALS['xmlrpc_internalencoding'] = $newEncoding;
-	}
 
 	/**
 	* Checks if a given charset encoding is present in a list of encodings or
